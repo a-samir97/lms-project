@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  {% if all_questions %}
+  <div class="text-center">
+    <h1> {{assignment_name}} </h1>
+  </div>
+  <hr>
+
+  {% for question in all_questions %}
+  <div class="card">
+    <div class="card-body">
+      {{forloop.counter}} : {{question.content}}.
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <h1> there is no questions </h1>
+  <p> question will be there soon </p>
+  {% endif %}
+  </div>
+{% endblock %}

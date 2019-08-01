@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+{% if assignments and request.user.is_authenticated and request.user.role.user_role == '2' %}
+	{% for assignment in assignments %}
+		<div class="card mb-3">
+			<h5 class="card-header">{{assignment.name}}</h5>
+			<div class="card-body">
+				<h5 class="card-title">Course: {{assignment.course.name}}</h5>
+				<p class="card-text">Course Content : {{ assignment.course.content }}</p>
+				<a href="{% url 'assignment:assignment-detail' assignment.id %}" class="btn btn-outline-primary">assignment Detail</a>
+				<a href="{% url 'assignment:delete-assignment' assignment.id %}" class="btn btn-outline-danger">delete assignment</a>
+			</div>
+		</div>
+	{% endfor %}
+
+	{% elif assignments and request.user.is_authenticated and request.user.role.user_role == '4' %}
+
+	{% comment %}
+			this section about the finished quizes by the student
+	{% endcomment %}
+	<div class="text-center">
+	<h1> Quizes </h1>
+	<hr>
+	</div>
+	{% for assignment in assignments %}
+		<div class="card mb-3">
+			<h5 class="card-header">{{assignment.name}}</h5>
+			<div class="card-body">
+				<h5 class="card-title">Course: {{assignment.course.name}}</h5>
+				<p class="card-text">Course Content : {{assignment.course.content}}</p>
+				<a href="{% url 'assignment:assignment-detail' assignment.id %}" class="btn btn-outline-dark">assignment Detail</a>
+			</div>
+		</div>
+	{% endfor %}
+	{% else %}
+		{% if request.user.is_authenticated and request.user.role.user_role == '2' %}
+			<h1> There is no assignment </h1>
+			<a href="{% url 'assignment:create-assignment' %}" class="btn btn-outline-dark">create assignment</a>
+		{% elif request.user.is_authenticated and request.user.role.user_role == '4' %}
+			<h1> There is no assignments </h1>
+			<p> assignments are comming soon </p>
+
+		{% endif %}
+
+{% endif %}
+</div>
+{% endblock %}

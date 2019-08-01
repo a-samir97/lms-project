@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+	{% if quiz.finished == True %}
+	<h2 class="text-center">
+		 {{quiz.name}} <small class="text-muted ml-3">published</small>
+	</h2>
+
+		<div class="text-center">
+			{% if request.user.is_authenticated and request.user.role.user_role == '2' %}
+			<a href="{% url 'quiz:all-quiz-questions' quiz.id %}" class="btn btn-outline-dark">Show all questions in the quiz</a>
+			<a href= "{% url 'quiz:quiz-questions' quiz.id %}" class="btn btn-outline-primary">create more questions </a>
+
+			{% if all_grades %}
+			<hr/>
+			<table class="table mb-4">
+				<thead>
+					<tr>
+					<th scope="col">#</th>
+					<th scope="col">student name</th>
+					<th scope="col">student marks</th>
+					<th scope="col">total marks </th>
+					</tr>
+				</thead>
+				{% for grade in all_grades %}
+				<tbody>
+					<tr>
+					<th scope="row">{{forloop.counter}}</th>
+					<td>{{grade.user_grade.username}}</td>
+					<td>{{grade.student_marks}}</td>
+					<td>{{grade.total_marks}}</td>
+					</tr>
+				</tbody>
+				{% endfor %}
+					</table>	
+			{% endif %}
+
+		</div>
+
+			{% elif request.user.is_authenticated and request.user.role.user_role == '4' and student_grades.count == 0 %}
+			<a href="{% url 'quiz:solve-quiz' quiz.id %}" class="btn btn-outline-dark">Start Quiz</a>
+			{% elif request.user.is_authenticated and request.user.role.user_role == '4' and student_grades.count == 1 %}
+			{% for grades in student_grades %}
+				<p> you have answered this quiz </p>
+				<h3> you have got <span class="text-primary">{{grades.student_marks}}</span> from <span class="text-primary">{{grades.total_marks}}</span> </h3>
+				<a href="{% url 'quiz:all-quizes' %}" class="btn btn-outline-dark">go to quizes</a>
+			{% endfor %}
+			{% endif %}
+
+	{% elif quiz.finished == False %}
+	<h2 class="text-center">
+		{{quiz.name}}<small class="text-muted ml-3">not published</small>
+	</h2>
+	<hr>
+		{% if request.user.is_authenticated and request.user.role.user_role == '2' %}
+		{% for question in quiz_questions %}
+		<div class="card">
+		  <div class="card-body">
+		    {{forloop.counter}} : {{question.content}}.
+		  </div>
+		</div>
+		{% endfor %}
+
+		<div class="text-center mt-3">
+					<a href= "{% url 'quiz:quiz-questions' quiz.id %}" class="btn btn-outline-dark">Create Question</a>
+					<a href= "{% url 'quiz:finish-quiz' quiz.id %}" class="btn btn-outline-dark">publish quiz to student</a>
+			</div>
+
+	{% elif request.user.is_authenticated and request.user.role.user_role == '4' %}
+		<div class="text-center">
+			<h2>this quiz is comming soon , please wait</h2>
+			<a href="{% url 'quiz:all-quizes' %}" class="btn btn-outline-dark">
+				Go to quizes
+			</a>
+		</div>
+			{% endif %}
+	{% endif %}
+</div>
+{% endblock content %}

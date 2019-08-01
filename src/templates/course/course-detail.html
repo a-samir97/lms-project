@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+{% if request.user.is_authenticated and request.user.role.user_role == '1' %}
+		<div class="row">
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Create User Role</h5>
+        <p class="card-text">user can be admin , instructor, teaching assistant, student.</p>
+        <a href="{% url 'users:create-role'%}" class="btn btn-outline-primary">Create User Role</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Delete User</h5>
+        <p class="card-text">you can delete any user which user's role can not be admin</p>
+        <a href="{% url 'user:delete-user' %}" class="btn btn-outline-danger">Delete User</a>
+      </div>
+    </div>
+  </div>
+
+
+<div class="col-sm-4">
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title">Create User Role</h5>
+			<p class="card-text">user can be admin , instructor, teaching assistant, student.</p>
+			    <a class="btn btn-outline-danger" href="{% url 'courses:delete-course' course.id %}"> delete course</a>
+		</div>
+	</div>
+</div>
+</div>
+{% endif %}
+
+	<div class="card text-center mb-3 mt-3">
+		  <div class="card-header">
+		    <h3 class="text-primary">Quizes</h3>
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title">{{course.name}}</h5>
+		    <p class="card-text">{{course.content}}</p>
+				{% if request.user.is_authenticated and request.user.role.user_role == '2' %}
+		    <a href="{% url 'quiz:all-quizes' %}" class="btn btn-outline-dark">All Quizes</a>
+		    <a href="{% url 'quiz:create-quiz' %}" class="btn btn-outline-danger">New Quiz</a>
+				{% elif request.user.is_authenticated and request.user.role.user_role == '4' %}
+				  <a href="{% url 'quiz:all-quizes' %}" class="btn btn-outline-dark">All Quizes</a>
+				{% endif %}
+		  </div>
+		  <div class="card-footer text-muted">
+		    {{course.users.all.count}} enrolled in this course
+		  </div>
+	</div>
+	<hr>
+	<div class="card text-center mb-3">
+		  <div class="card-header">
+		     <h3 class="text-primary"> Assignments </h3>
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title">{{course.name}}</h5>
+		    <p class="card-text">{{course.content}}</p>
+				{% if request.user.is_authenticated and request.user.role.user_role == '2' %}
+		    	<a href="{% url 'assignment:all-assignments' %}" class="btn btn-outline-dark">All Assignments</a>
+		    	<a href="{% url 'assignment:create-assignment' %}" class="btn btn-outline-danger">New Assignment</a>
+				{% elif request.user.is_authenticated  and request.user.role.user_role == '4' %}
+					<a href="{% url 'assignment:all-assignments' %}" class="btn btn-outline-dark">All Assignments</a>
+				{% endif %}
+
+			</div>
+		  <div class="card-footer text-muted">
+		    {{course.users.all.count}} enrolled in this course
+		  </div>
+	</div>
+	<hr>
+		<div class="card text-center mb-3">
+		  <div class="card-header">
+		     <h3 class="text-primary">Discussions</h3>
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title">{{course.name}}</h5>
+		    <p class="card-text">{{course.content}}</p>
+				{% if request.user.is_authenticated and request.user.role.user_role == '2' %}
+		    	<a href="{% url 'discussion:all-discussions' %}" class="btn btn-outline-dark">All Discussions</a>
+					<a href="{% url 'discussion:create-discussion' %}" class="btn btn-outline-danger">New Discussion</a>
+				{% elif request.user.is_authenticated and request.user.role.user_role == '4' %}
+			    <a href="{% url 'discussion:all-discussions' %}" class="btn btn-outline-dark">All Discussions</a>
+				{% endif %}
+		  </div>
+		  <div class="card-footer text-muted">
+		    {{course.users.all.count}} enrolled in this course
+		  </div>
+	</div>
+	<hr>
+		<div class="card text-center mb-3">
+		  <div class="card-header">
+		     <h3 class="text-primary"> Announcments </h3>
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title">{{course.name}}</h5>
+		    <p class="card-text">{{course.content}}</p>
+				{% if request.user.is_authenticated and request.user.role.user_role == '2' %}
+		    	<a href="{% url 'announcement:all-announcements' %}" class="btn btn-outline-dark">All Announcements</a>
+					<a href="{% url 'announcement:create-announcement' %}" class="btn btn-outline-danger">New Announcement</a>
+				{% elif request.user.is_authenticated and request.user.role.user_role == '4' %}
+					<a href="{% url 'announcement:all-announcements' %}" class="btn btn-outline-dark">All Announcements</a>
+				{% endif %}
+
+		  </div>
+		  <div class="card-footer text-muted">
+		    {{course.users.all.count}} enrolled in this course
+		  </div>
+	</div>
+	</div>
+{% endblock %}

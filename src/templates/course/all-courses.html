@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+	{% if not courses %}
+	<h2> there is no courses </h2>
+	{% endif %}
+	{% for course in courses %}
+
+		<div class="card mb-3">
+		  <div class="card-header">
+				<h1> {{course.name}} </h1>
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title">{{course.name}}</h5>
+		    <p class="card-text">{{course.content}}</p>
+		    <a class="btn btn-outline-dark" href="{% url 'courses:course-detail' course.id %}"> Course Details</a>
+		  </div>
+
+			<div class="card-footer text-muted">
+		    {{course.students_count}} students enrolled in Course
+		  </div>
+
+			<div class="card-footer text-muted">
+		    {{course.instructor_count}} instructors in Course
+		  </div>
+
+			<div class="card-footer text-muted">
+		    {{course.teaching_assistant_count}} teahing assisant in Course
+		  </div>
+		</div>
+	{% endfor %}
+	</div>
+{% endblock %}

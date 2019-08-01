@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Create Course</h5>
+        <p class="card-text">admin only who can create course.</p>
+        <a href="{% url 'courses:create-course' %}" class="btn btn-outline-dark">New Course</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">All Courses</h5>
+        <p class="card-text">All Couses in the learning management system.</p>
+        <a href="{% url 'courses:all-courses' %}" class="btn btn-outline-dark">All Courses</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

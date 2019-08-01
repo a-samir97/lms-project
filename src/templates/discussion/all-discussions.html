@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="text-center">
+    <h1> All discussions </h1>
+    <hr>
+  </div>
+  {% if not all_discussions %}
+    <div class="text-center">
+        <h3>there is no discussion</h3>
+        {% if request.user.is_authenticated and request.user.role.user_role == '2' %}
+        <a href="{% url 'discussion:create-discussion' %}" class="btn btn-outline-success">Create Discussion</a>
+        {% endif %}
+    </div>
+  {% else %}
+  {%for discussion in all_discussions %}
+        <div class="card">
+          <h5 class="card-header">Discussion {{forloop.counter}}</h5>
+          <div class="card-body">
+            <h5 class="card-title">{{discussion.name}}</h5>
+            <a href="{% url 'discussion:discussion-detail' discussion.id %}" class="btn btn-outline-primary">discussion details</a>
+            <a href="{% url 'discussion:delete-discussion' discussion.id %}" class="btn btn-outline-danger">delete discussion</a>
+          </div>
+          </div>
+  {% endfor %}
+{% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+{% if quizes and request.user.is_authenticated and request.user.role.user_role == '2' %}
+	{% for quiz in quizes %}
+		<div class="card mb-3">
+			<h5 class="card-header">{{quiz.name}}</h5>
+			<div class="card-body">
+				<h5 class="card-title">Course: {{quiz.course.name}}</h5>
+				<p class="card-text">Course Content : {{ quiz.course.content }}</p>
+				<a href="{% url 'quiz:quiz-detail' quiz.id %}" class="btn btn-outline-primary">Quiz Detail</a>
+				<a href="{% url 'quiz:delete-quiz' quiz.id %}" class="btn btn-outline-danger">Delete Quiz</a>
+			</div>
+		</div>
+	{% endfor %}
+
+	{% elif quizes and request.user.is_authenticated and request.user.role.user_role == '4' %}
+	<div class="text-center">
+	<h1> Quizes </h1>
+	<hr>
+	</div>
+	{% for quiz in quizes %}
+		<div class="card mb-3">
+			<h5 class="card-header">{{quiz.name}}</h5>
+			<div class="card-body">
+				<h5 class="card-title">Course: {{quiz.course.name}}</h5>
+				<p class="card-text">Course Content : {{quiz.course.content}}</p>
+				<a href="{% url 'quiz:quiz-detail' quiz.id %}" class="btn btn-outline-dark">Quiz Detail</a>
+			</div>
+		</div>
+	{% endfor %}
+	{% else %}
+		{% if request.user.is_authenticated and request.user.role.user_role == '2' %}
+			<h1> There is no Quizes </h1>
+			<a href="{% url 'quiz:create-quiz' %}" class="btn btn-outline-dark">create quiz</a>
+		{% elif request.user.is_authenticated and request.user.role.user_role == '4' %}
+			<h1> There is no Quizes </h1>
+			<p> Quizes are comming soon </p>
+
+		{% endif %}
+
+{% endif %}
+</div>
+{% endblock %}

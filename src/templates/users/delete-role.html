@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+<form method="POST">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="exampleFormControlSelect2">Example multiple select</label>
+    <select multiple class="form-control" id="exampleFormControlSelect2" name='users'>
+      {% for user in users%}
+        <option >{{user.username}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col text-center">
+      <button type="submit" class="btn btn-outline-danger">Delete User</button>
+  </div>
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+<form method='POST'>
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="exampleFormControlSelect2">Users</label>
+    <select multiple class="form-control" id="exampleFormControlSelect2" name='user'>
+      {% for user in users%}
+        <option>{{user.username}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect2">Roles</label>
+  <select class="custom-select custom-select-sm" name='role'>
+    {% for role in roles %}
+      <option value="{{forloop.counter}}">{{role}}</option>
+    {% endfor %}
+  </select>
+  </div>
+  <div class="col text-center">
+      <button type="submit" class="btn btn-outline-primary">Create Role</button>
+  </div>
+</form>
+</div>
+
+{% endblock %}

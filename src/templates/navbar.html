@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-2 shadow p-3 mb-5 bg-white rounded">
+  <a class="navbar-brand" href="/"><span class='text-primary'>L</span><span class='text-dark'>M</span><span class='text-danger'>S</span></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      {% if request.user.is_authenticated  and request.user.role.user_role == '1'%}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'home-page' %}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:admin-page' %}">Functionality</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/accounts/logout/">logout</a>
+      </li>
+      {% elif request.user.is_authenticated and request.user.role.user_role == '2' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'home-page' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:instructor-page' %}">Functionality</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/accounts/logout/">logout</a>
+          </li>
+      {% elif request.user.is_authenticated and request.user.role.user_role == '3' %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'home-page' %}">Home</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#">Functionality</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/accounts/logout/">logout</a>
+      </li>
+      {% elif request.user.is_authenticated and request.user.role.user_role == '4' %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'home-page' %}">Home</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'users:student-page' %}">Functionality</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/accounts/logout/">logout</a>
+      </li>
+      {% elif request.user.is_authenticated and request.user.role.user_role == None %}
+      <li class="nav-item">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/accounts/logout/">logout</a>
+      </li>
+      {% elif not request.user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/login/">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/signup/">Sign up</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>

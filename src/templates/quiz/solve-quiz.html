@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+{% if quiz_obj.finished == True %}
+
+    <form action="" method="post">
+      {% csrf_token %}
+
+        <div class="align-items-center">
+          {% for question in questions %}
+          <div class="card mb-4">
+          <div class="card-body">
+              {{forloop.counter}}: {{ question.content }}
+            </div>
+          </div>
+                  {% for answer in question.question_answers.all %}
+                      <div class="custom-control custom-radio mb-4">
+                        <input type="radio" id="customRadio{{question.id}}{{forloop.counter}}" name="answer{{question.id}}" value={{answer.true_answer}} class="custom-control-input">
+                        <label class="custom-control-label" for="customRadio{{question.id}}{{forloop.counter}}">{{answer.choice}}</label>
+                      </div>
+                  {% endfor %}
+
+          {% endfor %}
+          {% if submit_button %}
+          <div class="text-center mb-3">
+              <button type="submit" name="button" class="btn btn-outline-dark">
+                Submit your Answer
+              </button>
+            </div>
+            {% else %}
+            <div class="text-center mb-3">
+                <a class="btn btn-outline-dark" href="{% url 'course:all-courses'%}">go to course</a>
+              </div>
+            {% endif %}
+        </div>.
+    </form>
+  {% else %}
+  <div class="text-center">
+  <h1>quiz is comming soon <h1>
+  <p> please wait </p>
+  <a href="{% url 'quiz:all-quizes' %}" class="btn btn-outline-dark">Go to Quiz List </a>
+  </div>
+  {% endif %}
+  </div>
+{% endblock %}

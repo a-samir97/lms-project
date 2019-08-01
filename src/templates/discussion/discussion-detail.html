@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="text-center">
+    <h1>{{discussion_obj.name}} posts </h1>
+    <hr>
+    <a href="{% url 'discussion:create-post' %}" class="btn btn-outline-dark">create post</a>
+  </div>
+  {% for post in posts %}
+        <div class="card mt-4">
+          <div class="card-header">
+            Post {{forloop.counter}}
+            </div>
+            <div class="card-body">
+            <p class="card-text">{{post.content}}</p>
+            <a href="{% url 'discussion:post-detail' post.id%}" class="btn btn-outline-primary">post details</a>
+            <a href="{% url 'discussion:delete-post' post.id%}" class="btn btn-outline-danger">delete post</a>
+            </div>
+        </div>
+  {% endfor %}
+</div>
+{% endblock content %}

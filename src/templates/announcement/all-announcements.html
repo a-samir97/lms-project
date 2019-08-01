@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="textcenter">
+      <h2> all announcements </h2>
+      <hr>
+    </div>
+    {% for announcement in all_announcements %}
+        <div class="card mb-3">
+        <div class="card-body">
+          <p>{{announcement.announce_post}}<p>
+            {% if request.user.is_authenticated and request.uer.role.user_role == '2' %}
+          <a class="btn btn-outline-danger" href="{% url 'announcement:delete-announcement' announcement.id %}">delete announcement</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+
+{% endblock content %}
